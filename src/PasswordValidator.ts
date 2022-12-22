@@ -15,9 +15,7 @@ export class PasswordValidator {
   }
 
   checkSize(): boolean {
-    return this.password.length >= 16 && this.password.length <= 32
-      ? true
-      : false;
+    return this.password.length >= 16 && this.password.length <= 32;
   }
 
   splitPassword(): void {
