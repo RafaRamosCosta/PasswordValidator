@@ -36,12 +36,16 @@ export class PasswordValidator {
   }
 
   checkUpperAndLower(): boolean {
-    let upper = 0;
-    let lower = 0;
-    for (const num of this.ascii) {
+    let upper = this.ascii.reduce((upper, num) => {
       if (num >= 65 && num <= 90) upper++;
+      return upper;
+    }, 0);
+
+    let lower = this.ascii.reduce((lower, num) => {
       if (num >= 97 && num <= 122) lower++;
-    }
+      return lower;
+    }, 0);
+
     return upper !== 0 && lower !== 0;
   }
 
