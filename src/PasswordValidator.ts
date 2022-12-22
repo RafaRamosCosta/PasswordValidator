@@ -5,6 +5,8 @@ interface IResultProps {
 
 export class PasswordValidator {
   private SPECIALCHARS = ["!", "@", "#", "%", "$", "&", "*", "^", "~", "?"];
+  private PASSWORD_MIN_LENGTH = 16;
+  private PASSWORD_MAX_LENGTH = 32;
   private splittedPassword: string[] = [];
   private ascii: number[] = [];
   private resultObj: IResultProps = { result: true, errors: [] };
@@ -15,7 +17,10 @@ export class PasswordValidator {
   }
 
   checkSize(): boolean {
-    return this.password.length >= 16 && this.password.length <= 32;
+    return (
+      this.password.length >= this.PASSWORD_MIN_LENGTH &&
+      this.password.length <= this.PASSWORD_MAX_LENGTH
+    );
   }
 
   splitPassword(): void {
@@ -37,33 +42,35 @@ export class PasswordValidator {
 
   checkUpperAndLower(): boolean {
     let upper = this.ascii.reduce((upper, num) => {
-      if (num >= 65 && num <= 90) upper++;
+      const isUpperCase = num >= 65 && num <= 90;
+      if (isUpperCase) upper++;
       return upper;
     }, 0);
 
     let lower = this.ascii.reduce((lower, num) => {
-      if (num >= 97 && num <= 122) lower++;
+      const isLowerCase = num >= 97 && num <= 122;
+      if (isLowerCase) lower++;
       return lower;
     }, 0);
 
-    return upper !== 0 && lower !== 0;
+    const hasUpperAndLower = upper !== 0 && lower !== 0;
+    return hasUpperAndLower;
   }
 
-  checkSequence() {
+  checkSequence(): boolean {
     const formattedPass = this.splittedPassword.map((char) =>
       char.toLowerCase()
     );
 
     const ascii = this.toAscci(formattedPass);
 
-    const hasSequence = ascii.reduce((acc, curr, idx) => {
+    const sequences = ascii.reduce((acc, curr, idx) => {
       const middle = ascii[idx + 1];
       const last = ascii[idx + 2];
       if (middle === curr + 1 && last === curr + 2) acc++;
       return acc;
     }, 0);
-
-    return hasSequence > 0;
+    return sequences > 0;
   }
 
   validate() {
