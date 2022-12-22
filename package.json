@@ -6,7 +6,8 @@
   "author": "= <=>",
   "license": "MIT",
   "scripts": {
-    "validate": "ts-node-dev ./src/PasswordValidator.ts"
+    "validate": "ts-node-dev ./src/PasswordValidator.ts",
+    "test": "jest"
   },
   "devDependencies": {
     "jest": "^29.3.1",
