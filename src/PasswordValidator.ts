@@ -42,9 +42,7 @@ export class PasswordValidator {
       if (num >= 65 && num <= 90) upper++;
       if (num >= 97 && num <= 122) lower++;
     }
-    if (upper !== 0 && lower !== 0) return true;
-
-    return false;
+    return upper !== 0 && lower !== 0;
   }
 
   checkSequence() {
@@ -61,8 +59,7 @@ export class PasswordValidator {
       return acc;
     }, 0);
 
-    if (hasSequence > 0) return true;
-    return false;
+    return hasSequence > 0;
   }
 
   validate() {
