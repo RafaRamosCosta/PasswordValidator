@@ -16,15 +16,19 @@ export class PasswordValidator {
     this.ascii = this.toAscci(this.splittedPassword);
   }
 
+  splitPassword(): void {
+    this.splittedPassword = this.password.split("");
+  }
+
+  toAscci(password: string[]): number[] {
+    return password.map((char) => char.charCodeAt(0));
+  }
+
   checkSize(): boolean {
     return (
       this.password.length >= this.PASSWORD_MIN_LENGTH &&
       this.password.length <= this.PASSWORD_MAX_LENGTH
     );
-  }
-
-  splitPassword(): void {
-    this.splittedPassword = this.password.split("");
   }
 
   checkSpecialCharacters(): boolean {
@@ -34,10 +38,6 @@ export class PasswordValidator {
     }, 0);
 
     return specialCharacters >= 2;
-  }
-
-  toAscci(password: string[]): number[] {
-    return password.map((char) => char.charCodeAt(0));
   }
 
   checkUpperAndLower(): boolean {
@@ -64,10 +64,10 @@ export class PasswordValidator {
 
     const ascii = this.toAscci(formattedPass);
 
-    const sequences = ascii.reduce((acc, curr, idx) => {
-      const middle = ascii[idx + 1];
-      const last = ascii[idx + 2];
-      if (middle === curr + 1 && last === curr + 2) acc++;
+    const sequences = ascii.reduce((acc, currCode, idx) => {
+      const secondCode = ascii[idx + 1];
+      const thirdCode = ascii[idx + 2];
+      if (secondCode === currCode + 1 && thirdCode === currCode + 2) acc++;
       return acc;
     }, 0);
     return sequences > 0;
@@ -81,8 +81,10 @@ export class PasswordValidator {
     }
 
     const hasSpecialChars = this.checkSpecialCharacters();
-    if (!hasSpecialChars)
+    if (!hasSpecialChars) {
+      this.resultObj.result = false;
       this.resultObj.errors.push("Missing special characters!");
+    }
 
     const hasUpperAndLower = this.checkUpperAndLower();
     if (!hasUpperAndLower) {
@@ -100,6 +102,6 @@ export class PasswordValidator {
     return this.resultObj;
   }
 }
-const pass = "@34$dg34103fap013jalA10248";
-const passwordValidator = new PasswordValidator(pass);
+const password = "@34$dg34103fap013jalA10248";
+const passwordValidator = new PasswordValidator(password);
 console.log(passwordValidator.validate());
