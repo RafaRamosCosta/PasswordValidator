@@ -4,7 +4,7 @@ interface IResultProps {
 }
 
 export class PasswordValidator {
-  private SPECIALCHARS = ["!", "@", "#", "%", "$", "&", "*", "^", "~", "?"];
+  private SPECIALCHARS = "!@#%$&*^~?()'{}<>-_+=`´.,;:/|";
   private PASSWORD_MIN_LENGTH = 16;
   private PASSWORD_MAX_LENGTH = 32;
   private splittedPassword: string[] = [];
