@@ -59,14 +59,18 @@ export class PasswordValidator {
     );
 
     const ascii = this.toAscci(formattedPass);
-
-    const sequences = ascii.reduce((acc, currCode, idx) => {
+    let hasSequence = false;
+    let idx = 0;
+    while (!hasSequence && idx < ascii.length) {
+      const currCode = ascii[idx];
       const secondCode = ascii[idx + 1];
       const thirdCode = ascii[idx + 2];
-      if (secondCode === currCode + 1 && thirdCode === currCode + 2) acc++;
-      return acc;
-    }, 0);
-    return sequences > 0;
+      const isSequence =
+        secondCode === currCode + 1 && thirdCode === currCode + 2;
+      if (isSequence) hasSequence = true;
+      idx++;
+    }
+    return hasSequence;
   }
 
   validate() {
