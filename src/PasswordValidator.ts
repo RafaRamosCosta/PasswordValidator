@@ -14,6 +14,7 @@ export class PasswordValidator {
   constructor(private readonly password: string) {
     this.splittedPassword = this.password.split("");
     this.ascii = this.toAscci(this.splittedPassword);
+    this.resultObj = { result: true, errors: [] };
   }
 
   toAscci(password: string[]): number[] {
