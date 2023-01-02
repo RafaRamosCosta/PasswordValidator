@@ -1,6 +1,7 @@
 # PasswordValidator
 
 > Nesse desafio, você deverá construir um método/função que deve conseguir receber uma senha e retornar se a mesma é válida, dadas algumas validações. Utilize a linguagem de programação Javascript/Typescript.
+> 
 
 ## ❓ Case para o desafio
 
